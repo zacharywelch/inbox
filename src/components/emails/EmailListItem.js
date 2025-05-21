@@ -1,9 +1,13 @@
 import { formatDate } from '@/utils/dates'
 
-export default function EmailListItem({ email }) {
+export default function EmailListItem({ email, isSelected, onSelect }) {
   return (
-    <div className={`p-4 hover:bg-gray-50 cursor-pointer
-                   ${email.read ? 'bg-white' : 'bg-blue-50'}`}>
+    <div 
+      className={`p-4 hover:bg-gray-50 cursor-pointer
+                 ${email.read ? 'bg-white' : 'bg-blue-50'}
+                 ${isSelected ? 'border-l-4 border-indigo-500' : ''}`}
+      onClick={onSelect}
+    >
       <div className="flex justify-between items-start">
         <div className="flex-grow min-w-0">
           <div className="flex items-center">

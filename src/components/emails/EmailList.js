@@ -1,6 +1,6 @@
 import EmailListItem from './EmailListItem'
 
-export default function EmailList({ emails }) {
+export default function EmailList({ emails, selectedEmailId, onSelectEmail }) {
   if (!emails?.length) {
     return (
       <div className="p-8 text-center text-gray-500">
@@ -13,7 +13,12 @@ export default function EmailList({ emails }) {
   return (
     <div className="divide-y divide-gray-200">
       {emails.map(email => (
-        <EmailListItem key={email.id} email={email} />
+        <EmailListItem 
+          key={email.id} 
+          email={email} 
+          isSelected={email.id === selectedEmailId}
+          onSelect={() => onSelectEmail(email.id)}
+        />
       ))}
     </div>
   )

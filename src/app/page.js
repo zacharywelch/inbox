@@ -1,9 +1,13 @@
+"use client"
+import { useState } from 'react'
 import EmailList from '@/components/emails/EmailList'
 import EmailHeader from '@/components/emails/EmailHeader'
+import EmailDetail from '@/components/emails/EmailDetail'
 import emails from '@/data/emails'
 
 export default function Home() {
-  // Calculate counts for the header
+  const [selectedEmailId, setSelectedEmailId] = useState(null)
+  const selectedEmail = emails.find(email => email.id === selectedEmailId)
   const unreadCount = emails.filter(email => !email.read).length
   const totalCount = emails.length
   
@@ -14,9 +18,20 @@ export default function Home() {
         <div className="bg-white rounded-lg shadow-md overflow-hidden">
           <EmailHeader 
             unreadCount={unreadCount} 
-            totalCount={totalCount} 
+            totalCount={totalCount}
           />
-          <EmailList emails={emails} />
+          <div className="flex">
+            <div className="w-1/2 border-r">
+              <EmailList 
+                emails={emails}
+                selectedEmailId={selectedEmailId} 
+                onSelectEmail={setSelectedEmailId}
+              />
+            </div>
+            <div className="w-1/2">
+              <EmailDetail email={selectedEmail} />
+            </div>
+          </div>
         </div>
       </div>
     </main>
