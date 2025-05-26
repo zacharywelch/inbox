@@ -1,16 +1,43 @@
 "use client"
-import { useState } from 'react'
+import { useState, useMemo } from 'react'
 import EmailList from '@/components/emails/EmailList'
 import EmailHeader from '@/components/emails/EmailHeader'
 import EmailDetail from '@/components/emails/EmailDetail'
-import emails from '@/data/emails'
+import emailsData from '@/data/emails'
 
 export default function Home() {
+  const [emails, setEmails] = useState(emailsData)
   const [selectedEmailId, setSelectedEmailId] = useState(null)
-  const selectedEmail = emails.find(email => email.id === selectedEmailId)
-  const unreadCount = emails.filter(email => !email.read).length
-  const totalCount = emails.length
-  
+
+  const selectedEmail = useMemo(() =>
+    emails.find(email => email.id === selectedEmailId),
+    [emails, selectedEmailId]
+  )
+
+  const unreadCount = useMemo(() =>
+    emails.filter(email => !email.read).length,
+    [emails]
+  )
+
+  const totalCount = useMemo(() => emails.length, [emails])
+
+  const handleSelectEmail = (emailId) => {
+    setSelectedEmailId(emailId)
+    setEmails(prevEmails => prevEmails.map(email =>
+      email.id === emailId
+        ? {...email, read: true}
+        : email
+    ))
+  }
+
+  const handleToggleStar = (emailId) => {
+    setEmails(prevEmails => prevEmails.map(email =>
+      email.id === emailId
+        ? {...email, starred: !email.starred}
+        : email
+    ))
+  }
+
   return (
     <main className="min-h-screen bg-gray-100">
       <div className="container mx-auto p-4 max-w-4xl">
@@ -25,7 +52,8 @@ export default function Home() {
               <EmailList 
                 emails={emails}
                 selectedEmailId={selectedEmailId} 
-                onSelectEmail={setSelectedEmailId}
+                onSelectEmail={handleSelectEmail}
+                onToggleStar={handleToggleStar}
               />
             </div>
             <div className="w-1/2">

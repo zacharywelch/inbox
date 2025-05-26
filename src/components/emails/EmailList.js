@@ -1,6 +1,11 @@
 import EmailListItem from './EmailListItem'
 
-export default function EmailList({ emails, selectedEmailId, onSelectEmail }) {
+export default function EmailList({ 
+  emails, 
+  selectedEmailId, 
+  onSelectEmail,
+  onToggleStar
+}) {
   if (!emails?.length) {
     return (
       <div className="p-8 text-center text-gray-500">
@@ -17,7 +22,8 @@ export default function EmailList({ emails, selectedEmailId, onSelectEmail }) {
           key={email.id} 
           email={email} 
           isSelected={email.id === selectedEmailId}
-          onSelect={() => onSelectEmail(email.id)}
+          onSelectEmail={onSelectEmail}
+          onToggleStar={onToggleStar}
         />
       ))}
     </div>
