@@ -8,6 +8,7 @@ import emailsData from '@/data/emails'
 export default function Home() {
   const [emails, setEmails] = useState(emailsData)
   const [selectedEmailId, setSelectedEmailId] = useState(null)
+  const [isRefreshing, setIsRefreshing] = useState(false)
 
   const selectedEmail = useMemo(() =>
     emails.find(email => email.id === selectedEmailId),
@@ -38,6 +39,14 @@ export default function Home() {
     ))
   }
 
+  const handleRefresh = async() => {
+    setIsRefreshing(true)
+    await new Promise(resolve => setTimeout(resolve, 500))
+    setEmails(emailsData)
+    setSelectedEmailId(null)
+    setIsRefreshing(false)
+  }
+
   return (
     <main className="min-h-screen bg-gray-100">
       <div className="container mx-auto p-4 max-w-4xl">
@@ -46,6 +55,8 @@ export default function Home() {
           <EmailHeader 
             unreadCount={unreadCount} 
             totalCount={totalCount}
+            onRefresh={handleRefresh}
+            isRefreshing={isRefreshing}
           />
           <div className="flex">
             <div className="w-1/2 border-r">
