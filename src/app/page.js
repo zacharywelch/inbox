@@ -49,25 +49,32 @@ export default function Home() {
 
   return (
     <main className="min-h-screen bg-gray-100">
-      <div className="container mx-auto p-4 max-w-4xl">
+      <div className="container mx-auto p-4 max-w-5xl">
         <h1 className="text-2xl font-bold mb-4">Email Inbox</h1>
-        <div className="bg-white rounded-lg shadow-md overflow-hidden">
-          <EmailHeader 
-            unreadCount={unreadCount} 
+
+        {/* Main Email Interface */}
+        <div className="bg-white rounded-lg shadow-md overflow-hidden h-[calc(100vh-8rem)]">
+          <EmailHeader
+            unreadCount={unreadCount}
             totalCount={totalCount}
             onRefresh={handleRefresh}
             isRefreshing={isRefreshing}
           />
-          <div className="flex">
-            <div className="w-1/2 border-r">
-              <EmailList 
+
+          {/* Split Layout: List + Detail */}
+          <div className="flex h-full">
+            {/* Email List Panel */}
+            <div className="w-2/5 border-r border-gray-200 flex flex-col">
+              <EmailList
                 emails={emails}
-                selectedEmailId={selectedEmailId} 
+                selectedEmailId={selectedEmailId}
                 onSelectEmail={handleSelectEmail}
                 onToggleStar={handleToggleStar}
               />
             </div>
-            <div className="w-1/2">
+
+            {/* Email Detail Panel */}
+            <div className="w-3/5 flex flex-col">
               <EmailDetail email={selectedEmail} />
             </div>
           </div>
