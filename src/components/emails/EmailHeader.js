@@ -5,7 +5,7 @@ export default function EmailHeader({
   isRefreshing
 }) {
   return (
-    <div className="bg-gray-50 p-4 border-b">
+    <div className="bg-gray-50 p-4 border-b border-gray-200">
       <div className="flex justify-between items-center">
         <div>
           <h2 className="font-medium text-lg">Inbox</h2>
@@ -25,7 +25,7 @@ export default function EmailHeader({
             className={`px-3 py-1 rounded text-sm flex items-center gap-1 transition-colors
               ${isRefreshing
                 ? 'bg-gray-100 text-gray-400 cursor-not-allowed'
-                : 'bg-gray-200 hover:bg-gray-300 text-gray-700 cursor-pointer'
+                : 'bg-gray-200 hover:bg-gray-300 text-gray-700'
               }`}
           >
             {isRefreshing ? (
@@ -37,7 +37,7 @@ export default function EmailHeader({
               <span>Refresh</span>
             )}
           </button>
-          <button className="px-3 py-1 bg-indigo-600 text-white hover:bg-indigo-700 rounded text-sm cursor-pointer">
+          <button className="px-3 py-1 bg-indigo-600 text-white hover:bg-indigo-700 rounded text-sm">
             New Email
           </button>
         </div>

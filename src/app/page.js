@@ -47,29 +47,44 @@ export default function Home() {
     setIsRefreshing(false)
   }
 
+  const handleBack = () => {
+    setSelectedEmailId(null)
+  }
+
   return (
     <main className="min-h-screen bg-gray-100">
-      <div className="container mx-auto p-4 max-w-4xl">
+      <div className="container mx-auto p-4 max-w-5xl">
         <h1 className="text-2xl font-bold mb-4">Email Inbox</h1>
-        <div className="bg-white rounded-lg shadow-md overflow-hidden">
-          <EmailHeader 
-            unreadCount={unreadCount} 
-            totalCount={totalCount}
-            onRefresh={handleRefresh}
-            isRefreshing={isRefreshing}
-          />
-          <div className="flex">
-            <div className="w-1/2 border-r">
-              <EmailList 
-                emails={emails}
-                selectedEmailId={selectedEmailId} 
-                onSelectEmail={handleSelectEmail}
-                onToggleStar={handleToggleStar}
-              />
-            </div>
-            <div className="w-1/2">
-              <EmailDetail email={selectedEmail} />
-            </div>
+        <div className="bg-white rounded-lg shadow-md overflow-hidden h-[calc(100vh-8rem)] grid grid-rows-[auto_1fr] md:grid-cols-[2fr_3fr]">
+          <div className="col-span-full">
+            <EmailHeader
+              unreadCount={unreadCount}
+              totalCount={totalCount}
+              onRefresh={handleRefresh}
+              isRefreshing={isRefreshing}
+            />
+          </div>
+          <div className={`
+            overflow-hidden border-b md:border-b-0 md:border-r border-gray-200
+            flex flex-col
+            ${selectedEmail && 'hidden md:flex'}
+          `}>
+            <EmailList
+              emails={emails}
+              selectedEmailId={selectedEmailId}
+              onSelectEmail={handleSelectEmail}
+              onToggleStar={handleToggleStar}
+            />
+          </div>
+          <div className={`
+            overflow-hidden
+            flex flex-col
+            ${!selectedEmail && 'hidden md:flex'}
+          `}>
+            <EmailDetail
+              email={selectedEmail}
+              onBack={handleBack}
+            />
           </div>
         </div>
       </div>
