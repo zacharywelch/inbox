@@ -11,7 +11,7 @@ export default function EmailHeader({
     <div className="bg-gray-50 p-4 border-b border-gray-200">
       <div className="flex justify-between items-center">
         <div>
-          <h2 className="font-medium text-lg">Inbox</h2>
+          <h1 className="font-medium text-lg">Inbox</h1>
           <div className="text-sm text-gray-500">
             {unreadCount > 0 ? (
               <span>{unreadCount} unread of {totalCount} total</span>

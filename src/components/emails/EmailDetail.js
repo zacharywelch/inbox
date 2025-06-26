@@ -1,8 +1,11 @@
+// src/components/emails/EmailDetail.js
+
 import { ArrowLeft, Mail, Star } from "lucide-react"
 import { Button } from "@/components/ui/button"
 import { Badge } from "@/components/ui/badge"
 import { ScrollArea } from "@/components/ui/scroll-area"
 import { formatDate } from '@/lib/dates'
+import EmailAvatar from './EmailAvatar'
 
 export default function EmailDetail({ email, onBack }) {
   if (!email) {
@@ -34,7 +37,8 @@ export default function EmailDetail({ email, onBack }) {
           </div>
         )}
 
-        <div className="flex items-start justify-between mb-3">
+        {/* Subject and metadata */}
+        <div className="flex items-start justify-between mb-4">
           <h1 className="text-xl font-semibold text-gray-900 leading-tight pr-4">
             {email.subject}
           </h1>
@@ -49,28 +53,34 @@ export default function EmailDetail({ email, onBack }) {
           </div>
         </div>
 
-        <div className="space-y-2 text-sm">
-          <div className="flex items-center">
-            <span className="font-medium text-gray-700 w-16">From:</span>
-            <span className="text-gray-900">{email.from}</span>
-          </div>
+        {/* Sender info as media object */}
+        <div className="flex items-center space-x-3 mb-3">
+          <EmailAvatar
+            name={email.from}
+            avatar={email.avatar}
+            size="lg"
+          />
+          <div className="flex-1 min-w-0">
+            {/* Sender name as heading */}
+            <div className="font-medium text-gray-900 text-base mb-1">
+              {email.from}
+            </div>
 
-          {/* Labels Section */}
-          {email.labels?.length > 0 && (
-            <div className="flex items-center">
-              <span className="font-medium text-gray-700 w-16">Labels:</span>
+            {/* Labels underneath */}
+            {email.labels?.length > 0 && (
               <div className="flex flex-wrap gap-1">
                 {email.labels.map((label) => (
                   <Badge
                     key={label}
                     variant="secondary"
+                    className="text-xs"
                   >
                     {label}
                   </Badge>
                 ))}
               </div>
-            </div>
-          )}
+            )}
+          </div>
         </div>
       </div>
 
