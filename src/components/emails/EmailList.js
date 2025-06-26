@@ -1,3 +1,4 @@
+import { ScrollArea } from "@/components/ui/scroll-area"
 import EmailListItem from './EmailListItem'
 
 export default function EmailList({ 
@@ -18,7 +19,7 @@ export default function EmailList({
   }
   
   return (
-    <div className="flex-1 overflow-y-auto">
+    <ScrollArea className="h-full">
       <div className="divide-y divide-gray-200">
         {emails.map(email => (
           <EmailListItem
@@ -30,6 +31,6 @@ export default function EmailList({
           />
         ))}
       </div>
-    </div>
+    </ScrollArea>
   )
 }

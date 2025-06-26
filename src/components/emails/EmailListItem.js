@@ -1,4 +1,7 @@
-import { formatDate } from '@/utils/dates'
+import { Button } from "@/components/ui/button"
+import { Badge } from "@/components/ui/badge"
+import { Star } from "lucide-react"
+import { formatDate } from "@/lib/dates"
 
 export default function EmailListItem({
   email,
@@ -13,29 +16,33 @@ export default function EmailListItem({
 
   return (
     <div
-      className={`p-4 hover:bg-gray-50 cursor-pointer
-                 ${email.read ? 'bg-white' : 'bg-blue-50'}
-                 ${isSelected ? 'border-l-4 border-indigo-500' : ''}`}
+      className={`
+        p-4 hover:bg-gray-50 cursor-pointer
+        ${email.read ? "bg-white" : "bg-blue-50"}
+        ${isSelected && "border-l-4 border-primary"}
+      `}
       onClick={() => onSelectEmail(email.id)}
     >
       <div className="flex justify-between items-start">
         <div className="flex-grow min-w-0">
           <div className="flex items-center">
-            <button
+            <Button
+              variant="ghost"
+              size="icon"
+              className={`
+                h-4 w-4 p-0 mr-1 hover:text-yellow-400 hover:bg-transparent
+                ${email.starred ? "text-yellow-400" : "text-gray-400"}
+              `}
               onClick={handleToggleStar}
-              className="text-gray-400 hover:text-yellow-500 mr-2 focus:outline-none"
-              aria-label={email.starred ? "Unstar email" : "Star email"}
             >
-              {email.starred
-                ? <span className="text-yellow-500">★</span>
-                : <span>☆</span>}
-            </button>
-            <span className={`font-medium ${!email.read ? 'font-bold' : ''}`}>
+              <Star className={`${email.starred && "fill-current"}`} />
+            </Button>
+            <span className={`font-medium ${!email.read && "font-bold"}`}>
               {email.from}
             </span>
           </div>
 
-          <div className={`${!email.read ? 'font-bold' : ''}`}>
+          <div className={`${!email.read && "font-bold"}`}>
             {email.subject}
           </div>
 
@@ -45,25 +52,20 @@ export default function EmailListItem({
 
           {email.labels?.length > 0 && (
             <div className="mt-2 flex flex-wrap gap-1">
-              {email.labels.map(label => (
-                <span
+              {email.labels.map((label) => (
+                <Badge
                   key={label}
-                  className="px-2 py-0.5 text-xs rounded-full bg-gray-200 text-gray-700"
+                  variant="secondary"
                 >
                   {label}
-                </span>
+                </Badge>
               ))}
             </div>
           )}
         </div>
 
-        <div className="flex items-center">
-          <div className="text-sm text-gray-500 whitespace-nowrap mr-3">
-            {formatDate(email.date)}
-          </div>
-          {email.read
-            ? <span className="text-gray-400">○</span>
-            : <span className="text-blue-500">●</span>}
+        <div className="text-sm text-gray-500 whitespace-nowrap mr-3">
+          {formatDate(email.date)}
         </div>
       </div>
     </div>

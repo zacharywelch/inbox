@@ -1,3 +1,6 @@
+import { Loader2Icon } from "lucide-react"
+import { Button } from "@/components/ui/button"
+
 export default function EmailHeader({
   unreadCount,
   totalCount,
@@ -19,27 +22,26 @@ export default function EmailHeader({
         </div>
         
         <div className="flex space-x-2">
-          <button
+          <Button
+            variant="outline"
+            size="sm"
             onClick={onRefresh}
             disabled={isRefreshing}
-            className={`px-3 py-1 rounded text-sm flex items-center gap-1 transition-colors
-              ${isRefreshing
-                ? 'bg-gray-100 text-gray-400 cursor-not-allowed'
-                : 'bg-gray-200 hover:bg-gray-300 text-gray-700'
-              }`}
           >
             {isRefreshing ? (
               <>
-                <div className="w-3 h-3 border border-gray-400 border-t-transparent rounded-full animate-spin"></div>
+                <Loader2Icon className="animate-spin" />
                 Refreshing...
               </>
             ) : (
               <span>Refresh</span>
             )}
-          </button>
-          <button className="px-3 py-1 bg-indigo-600 text-white hover:bg-indigo-700 rounded text-sm">
+          </Button>
+          <Button
+            size="sm"
+          >
             New Email
-          </button>
+          </Button>
         </div>
       </div>
     </div>
