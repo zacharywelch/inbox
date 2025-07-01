@@ -1,55 +1,22 @@
 "use client"
-import { useState, useMemo } from 'react'
 import EmailList from '@/components/emails/EmailList'
 import EmailHeader from '@/components/emails/EmailHeader'
 import EmailDetail from '@/components/emails/EmailDetail'
-import emailsData from '@/data/emails'
+import { useEmails } from '@/hooks/useEmails'
 
 export default function Home() {
-  const [emails, setEmails] = useState(emailsData)
-  const [selectedEmailId, setSelectedEmailId] = useState(null)
-  const [isRefreshing, setIsRefreshing] = useState(false)
-
-  const selectedEmail = useMemo(() =>
-    emails.find(email => email.id === selectedEmailId),
-    [emails, selectedEmailId]
-  )
-
-  const unreadCount = useMemo(() =>
-    emails.filter(email => !email.read).length,
-    [emails]
-  )
-
-  const totalCount = useMemo(() => emails.length, [emails])
-
-  const handleSelectEmail = (emailId) => {
-    setSelectedEmailId(emailId)
-    setEmails(prevEmails => prevEmails.map(email =>
-      email.id === emailId
-        ? {...email, read: true}
-        : email
-    ))
-  }
-
-  const handleToggleStar = (emailId) => {
-    setEmails(prevEmails => prevEmails.map(email =>
-      email.id === emailId
-        ? {...email, starred: !email.starred}
-        : email
-    ))
-  }
-
-  const handleRefresh = async() => {
-    setIsRefreshing(true)
-    await new Promise(resolve => setTimeout(resolve, 500))
-    setEmails(emailsData)
-    setSelectedEmailId(null)
-    setIsRefreshing(false)
-  }
-
-  const handleBack = () => {
-    setSelectedEmailId(null)
-  }
+  const {
+    emails,
+    selectedEmail,
+    selectedEmailId,
+    isRefreshing,
+    unreadCount,
+    totalCount,
+    handleSelectEmail,
+    handleToggleStar,
+    handleRefresh,
+    handleBack
+  } = useEmails()
 
   return (
     <main className="min-h-screen bg-gray-100">

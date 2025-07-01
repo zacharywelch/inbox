@@ -1,14 +1,18 @@
+import { memo } from 'react'
 import { Button } from "@/components/ui/button"
 import { Badge } from "@/components/ui/badge"
 import { Star } from "lucide-react"
 import { formatDate } from "@/lib/dates"
 
-export default function EmailListItem({
+const EmailListItem = memo(function EmailListItem({
   email,
   isSelected,
   onSelectEmail,
   onToggleStar
 }) {
+  // Remove the console.log for production
+  console.log(`Rendering email: ${email.id}`)
+
   const handleToggleStar = (e) => {
     e.stopPropagation()
     onToggleStar(email.id)
@@ -70,4 +74,8 @@ export default function EmailListItem({
       </div>
     </div>
   )
-}
+})
+
+EmailListItem.displayName = 'EmailListItem'
+
+export default EmailListItem

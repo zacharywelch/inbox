@@ -1,9 +1,9 @@
 import { ScrollArea } from "@/components/ui/scroll-area"
 import EmailListItem from './EmailListItem'
 
-export default function EmailList({ 
-  emails, 
-  selectedEmailId, 
+export default function EmailList({
+  emails,
+  selectedEmailId,
   onSelectEmail,
   onToggleStar
 }) {
@@ -17,7 +17,7 @@ export default function EmailList({
       </div>
     )
   }
-  
+
   return (
     <ScrollArea className="h-full">
       <div className="divide-y divide-gray-200">
